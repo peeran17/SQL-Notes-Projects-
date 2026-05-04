@@ -61,4 +61,57 @@ SELECT SYSDATETIMEOFFSET()
 
 SELECT SWITCHOFFSET('2026-05-01 11:56:38.8076280 +05:30', '-10:00')
 
+----Next Cocnept 
+-- LEN(COLUMN_NAME)                            -- RETURNS NO OF CHARS INCLUDE ANY SPECIAL CHARS ALSO [SPACE, COMMA, COLON, ... ]
+-- LEFT(COLUMN_NAME, NO OF CHARS)              ---- RETURNS SPECIFIED NO OF CHARS FROM STARTING ONWARDS IN EACH CUSTOMER NAME
+-- RIGHT(COLUMN_NAME, NO OF CHARS)             ----- RETURNS SPECIFIED NO OF CHARS FROM ENDING ONWARDS IN EACH CUSTOMER NAME
+-- SUBSTRING(COL_NAME, START POS, NO OF CHARS) -- RETURNS SPECIFIED NO OF CHARS FROM SPCIFIED POS
+
+select *from emp
+select job,
+len(job) as leght_,
+LEFT(job,3) as lef_char,
+RIGHT(job,3) as right_char,
+SUBSTRING(job,2,4) as sub_string
+from emp
+
+--Ex:-- CA-2016-152156 - CA, 2016, 152156
+
+--CONCAT-Function
+select [ENAME],[JOB],
+concat([ENAME],[JOB])as con1 from emp
+
+--CHAIRINDEX - is is used to search a character or word in every column value and returns the Pos of CHAR/Word
+select ename,CHARINDEX('E',ename) as search from emp  --it returns the position
+select hiredate,CHARINDEX('1980',hiredate) as search2 from emp
+
+--TRIM
+select TRIM(ename) as cust_name,UPPER(ename) as cust_upper from EMP
+
+--CASE,IIF Statements
+--IIF(condition,True_value,False_value)
+--IIF(2>3,A,B)
+
+select price,
+IIF(price>40000,'High','Low') as Price_values from Products
+
+--profit>0 Pos_profit,0-Zero,0<-Neg Profit
+select profit,
+IIF(profit>0 ,'Pos profit',iif(profit=0,'Zero','Neg profit')) as profit_categories 
+from sales
+order by profit_categories desc
+
+-- CASE WHEN COND1 THEN VALUE1 WHEN COND2 THEN VALUE2 .... ELSE VALUEN END
+select profit,
+(CASE when profit>= 4200 then 'high profit' else 'Low Profit') as Profit_cat )
+from sales_data
+order by Profit DESC
+
+--MathFunctions
+select profit ,
+Round(profit,1) as roundedd,
+CEILING(profit) AS CEIL,
+FLOOR (profit) AS FLR
+FROM SALES_DATA
+
 
