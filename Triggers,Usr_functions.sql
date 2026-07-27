@@ -46,3 +46,63 @@ INSERT INTO EMP(EMPNO , ENAME, SAL) VALUES (1177, 'ABCD', 12000)
 SELECT . FROM AUDIT_LOG
 SELECT . FROM EMP
 --above How it Works Means,when insert the values into the Emp ut stores in Auditlog as well as Emp table
+
+
+--User Defined functions
+select*from EMP
+select SUM(sal) as Total_salary from EMP
+
+
+--Functions(User Defined functions) 
+--
+create function fn_01(@x int)   --creating function
+returns int                     -- type of output to mention
+as
+begin
+      set @x=@x+100
+     return @x
+end
+
+select dbo.fn_01(100)
+select sal,dbo.fn_01(sal) from EMP --Every salary column gets adds 100
+
+
+create function fn_02(@x int)
+returns  varchar(20)
+as
+
+begin
+      declare @z varchar(20)
+	  if @x >0
+	     set @z='pos'
+       else if @x<0
+	     set @z='neg'
+		else
+		set @z=0
+
+		return @z
+end
+select dbo.fn_02(0)
+select profit,dbo.fn_02(profit) from sales_data
+
+create function fn_03(@dob date)
+
+returns int
+as
+begin
+
+     return datediff(year,@dob,getdate())
+end
+
+select dbo.fn_03('01-jan-1980')
+
+--
+create function get_dep(@deptno int)
+returns table
+as                                                  --whenever we are executing this table we dont nedd begin and end
+
+return(select*from EMP where DEPTNO=@deptno)
+
+select*from dbo.get_dep(20)
+
+
