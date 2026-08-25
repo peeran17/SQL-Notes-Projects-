@@ -1,6 +1,6 @@
 --NOTE ; COMMANDS OR NAMES CAN BE TYPED IN UPPER /LOWER/MIXED CASE ALPHABETS 
 ---DQL (Data query Language) 
--- SELECT : Is used To get the Data Prsent in the Table
+-- SELECT : SELECT is a SQL statement used to retrieve data from one or more tables. It allows us to select specific columns, filter results, perform calculations, use functions, and return the required data.
 --SELECT * FROM TABLENAME
 
 
