@@ -37,6 +37,10 @@ SP_HELP STUDENT
 --DROP : REMOVE ALL DATA &TABLE FROM DATABASE PERMANENTLY
 DROP TABLE STUDENT
 
+--To Remove the Perticular Column
+alter table insurance 
+drop column status
+
 
 ----------------------------------------------------------------------------------------------------------------
 SP_HELP STUDENT 
