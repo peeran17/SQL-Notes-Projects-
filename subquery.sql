@@ -191,3 +191,87 @@ Master these patterns:
 ✅ IN Subquery
 ✅ EXISTS Subquery
 ✅ Correlated Subquery
+
+
+
+The four main subquery patterns
+You don't need to memorize every variation at once. First, learn to recognize what the question is asking.
+
+Type 1: Scalar subquery
+
+One value
+When: The question compares something with one calculated value.
+
+Example: Find orders above the average amount.
+
+SQL
+
+
+WHERE Amount > (
+    SELECT AVG(Amount)
+    FROM Orders
+)
+
+Look for phrases like above average, maximum, minimum, or equal to the overall average.
+
+Type 2: IN subquery
+
+Multiple values
+When: You want to match against a list of values returned by another query.
+
+Example: Find customers who have placed an Electronics order.
+
+SQL
+
+
+SELECT CustomerID
+FROM Orders
+WHERE CustomerID IN (
+    SELECT CustomerID
+    FROM Orders
+    WHERE Category = 'Electronics'
+);
+
+The inner query returns customer IDs that ordered Electronics. The outer query matches those IDs.
+
+#################Type 3: Correlated subquery###########################
+
+Depends on the outer row
+When: You need to compare each row against a value calculated for its own group.
+
+Example: Find orders whose amount is greater than the average amount for that order's category.
+
+SQL
+
+
+SELECT o.OrderID, o.Category, o.Amount
+FROM Orders AS o
+WHERE o.Amount > (
+    SELECT AVG(i.Amount)
+    FROM Orders AS i
+    WHERE i.Category = o.Category
+);
+
+The inner query refers to o.Category from the outer query. That connection makes it correlated.
+
+Type 4: EXISTS subquery
+
+Checks existence
+When: You only need to know whether at least one matching row exists.
+
+Example: Find customers who have at least one Electronics order.
+
+SQL
+
+
+SELECT c.CustomerID
+FROM (
+    SELECT DISTINCT CustomerID
+    FROM Orders
+) AS c
+WHERE EXISTS (
+    SELECT 1
+    FROM Orders AS o
+    WHERE o.CustomerID = c.CustomerID
+      AND o.Category = 'Electronics'
+);
